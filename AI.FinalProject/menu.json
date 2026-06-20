@@ -1,0 +1,76 @@
+{
+  "dishes": {
+    "Canh chua có cá": {
+      "name": "Canh chua có cá",
+      "name_en": "Sour Soup with Fish",
+      "price": 25000,
+      "note": ""
+    },
+    "Canh chua không cá": {
+      "name": "Canh chua không cá",
+      "name_en": "Sour Soup (no fish)",
+      "price": 10000,
+      "note": ""
+    },
+    "Canh rau": {
+      "name": "Canh rau",
+      "name_en": "Vegetable Soup",
+      "price": 7000,
+      "note": "Cải hay muống"
+    },
+    "Cá hú kho": {
+      "name": "Cá hú kho",
+      "name_en": "Braised Snakehead Fish",
+      "price": 30000,
+      "note": ""
+    },
+    "Cơm": {
+      "name": "Cơm trắng",
+      "name_en": "White Rice",
+      "price": 10000,
+      "note": "Một giá tiền nhiều hay ít"
+    },
+    "Rau xào": {
+      "name": "Rau xào",
+      "name_en": "Stir-fried Vegetables",
+      "price": 10000,
+      "note": "Lagim/củ sắn/đậu que/đậu đũa"
+    },
+    "Sườn nướng": {
+      "name": "Sườn nướng",
+      "name_en": "Grilled Ribs",
+      "price": 30000,
+      "note": ""
+    },
+    "Thịt kho": {
+      "name": "Thịt kho",
+      "name_en": "Braised Pork",
+      "price": 25000,
+      "note": "Không có trứng"
+    },
+    "Thịt kho trứng": {
+      "name": "Thịt kho trứng",
+      "name_en": "Braised Pork with Egg",
+      "price": 30000,
+      "note": "Một trứng, thêm 1 trứng +6.000đ"
+    },
+    "Trứng chiên": {
+      "name": "Trứng chiên",
+      "name_en": "Fried Egg",
+      "price": 15000,
+      "note": "Trứng chiên (không thịt)"
+    },
+    "Trứng chiên thịt": {
+      "name": "Trứng chiên thịt",
+      "name_en": "Fried Egg with Meat",
+      "price": 25000,
+      "note": "Trứng chiên thịt"
+    },
+    "Đậu hũ sốt cà": {
+      "name": "Đậu hũ sốt cà",
+      "name_en": "Tofu in Tomato Sauce",
+      "price": 25000,
+      "note": ""
+    }
+  }
+}
