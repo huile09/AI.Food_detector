@@ -1,8 +1,3 @@
-"""
-Canteen Auto-Billing System
-Hệ thống tự động tính tiền canteen
-"""
-
 import os
 
 import tkinter as tk
@@ -17,7 +12,7 @@ from pathlib import Path
 import sys
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
-# Tọa độ các ô trên khay mẫu (reference size) - cập nhật mới
+
 TRAY_REGIONS_REF = {
     "O1_tren_trai":  [375, 95, 770, 470],
     "O2_tren_phai":  [790, 100, 1170, 470],
@@ -26,9 +21,9 @@ TRAY_REGIONS_REF = {
     "O5_duoi_phai":  [985, 510, 1605, 1030],
 }
 
-REF_W, REF_H = 2048, 1152   # kích thước ảnh tham chiếu
+REF_W, REF_H = 2048, 1152
 
-# ─── CALIBRATION (chỉnh lệch tọa độ) ───────────────────────────────────────────
+# ─── CALIBRATION  ───────────────────────────────────────────
 CALIB_PATH = os.path.join(os.path.dirname(__file__), "calib.json")
 DEFAULT_CALIB = {"offset_x": 0, "offset_y": 0, "scale": 1.0}
 
@@ -59,11 +54,10 @@ REGION_LABELS = {
     "O5_duoi_phai":  "Ô 5 – Dưới Phải",
 }
 
-# Màu sắc ─ minimal dark theme
 BG       = "#0f0f0f"
 SURFACE  = "#1a1a1a"
 BORDER   = "#2a2a2a"
-ACCENT   = "#e8c547"       # vàng cơm / amber
+ACCENT   = "#e8c547"      
 TEXT     = "#f0f0f0"
 SUBTEXT  = "#888888"
 SUCCESS  = "#4caf7d"
@@ -80,7 +74,6 @@ MENU_PATH = os.path.join(os.path.dirname(__file__), "menu.json")
 CROPS_DIR = os.path.join(os.path.dirname(__file__), "cropped_dishes")
 os.makedirs(CROPS_DIR, exist_ok=True)
 
-# Thư mục chứa file model (.h5 / .pt) – để cố định ở Downloads theo yêu cầu
 MODELS_DIR = os.path.join(os.path.expanduser("~"), "Downloads")
 
 # ─── LOAD MENU ─────────────────────────────────────────────────────────────────
@@ -93,19 +86,15 @@ def load_menu():
 
 MENU = load_menu()
 
-# Các món có thể chứa trứng -> đếm thủ công bằng bàn phím
 EGG_DISH_KEYS   = {"Thịt kho trứng", "Trứng chiên", "Trứng chiên thịt"}
-EGG_BASE_COUNT  = 1          # số trứng đã tính trong giá gốc
-EGG_EXTRA_PRICE = 6000        # phụ thu mỗi trứng thêm
-# Tất cả món đều tính tiền theo bảng giá
+EGG_BASE_COUNT  = 1         
+EGG_EXTRA_PRICE = 6000      
+
 FREE_SIDE_KEYS = set()
 
 # ─── MODEL LOADER ──────────────────────────────────────────────────────────────
 CNN_MODEL  = None
-# Thứ tự lớp PHẢI khớp chính xác với class_indices lúc train (KHÔNG sort lại):
-# {'Canh chua có cá':0,'Canh chua không cá':1,'Canh rau':2,'Cá hú kho':3,'Cơm':4,
-#  'Rau xào':5,'Sườn nướng':6,'Thịt kho':7,'Thịt kho trứng':8,'Trứng chiên':9,
-#  'Trứng chiên thịt':10,'Đậu hũ sốt cà':11}
+
 CLASS_NAMES = [
     "Canh chua có cá",
     "Canh chua không cá",
@@ -132,9 +121,7 @@ def try_load_models():
             import tensorflow as tf
             from tensorflow.keras.layers import Dense
 
-            # ── PATCH: Keras 3.x legacy .h5 loader đưa thêm 'quantization_config'
-            # vào config của Dense, nhưng Dense.__init__ ở vài bản Keras 3 không
-            # nhận tham số này -> bỏ nó đi trước khi khởi tạo layer.
+
             if not getattr(Dense, "_qc_patched", False):
                 _orig_from_config = Dense.from_config.__func__
 
@@ -202,8 +189,7 @@ def predict_dish(crop_np):
     Trả về (dish_key, confidence)."""
     if CNN_MODEL is not None:
         try:
-            # OpenCV đọc ảnh ở dạng BGR, nhưng model Keras (ImageDataGenerator/PIL)
-            # luôn train trên RGB -> PHẢI chuyển màu trước khi predict.
+
             rgb = cv2.cvtColor(crop_np, cv2.COLOR_BGR2RGB)
             img = cv2.resize(rgb, (128, 128))
             img = img.astype("float32") / 255.0
@@ -233,7 +219,7 @@ def draw_annotations(img_pil, regions, results):
     for i, (key, (x1, y1, x2, y2)) in enumerate(regions.items()):
         color_hex = BOX_COLORS[i % len(BOX_COLORS)]
         r, g, b = tuple(int(color_hex.lstrip("#")[j:j+2], 16) for j in (0, 2, 4))
-        # box fill
+
         draw.rectangle([x1, y1, x2, y2], outline=(r, g, b, 220), width=3)
         draw.rectangle([x1, y1, x2, y2], fill=(r, g, b, 25))
 
